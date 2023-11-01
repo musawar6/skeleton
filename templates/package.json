@@ -1,0 +1,28 @@
+{
+  "name": "bootstrap-news-feed",
+  "version": "1.0.0",
+  "description": "Responsive News Feed built with the latest Bootstrap 5. Enhance your project with a variety of social sections such as news feed, comments, and post cards.",
+  "main": "basic.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdbootstrap/bootstrap-news-feed.git"
+  },
+  "keywords": [
+    "bootstrap",
+    "news-feed",
+    "bootstrap5",
+    "feed",
+    "news",
+    "news-agregator",
+    "social-newsfeed"
+  ],
+  "author": "mdbootstrap",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdbootstrap/bootstrap-news-feed/issues"
+  },
+  "homepage": "https://mdbootstrap.com/docs/standard/extended/news-feed/"
+}

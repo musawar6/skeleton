@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Material Design for Bootstrap</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="templates/img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="templates/css/bootstrap-news-feed.min.css" />
+  <link rel="stylesheet" href="templates/css/mystyle.css">
+</head>
+
+<body>
+  <span >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+      </div>
+
+      <span class="navright">
+       
+        
+
+        <!-- datsa -->
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <!-- your head content here -->
+        </head>
+        <body>
+            <!-- your navigation and other HTML elements here -->
+        
+            
+        
+            <!-- your other HTML content here -->
+        </body>
+        </html>
+        
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+         
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">logout</a>
+          </li>
+        </ul>
+      </div>
+      </span>
+    </nav>
+  </span>
+  <!-- Start your project here-->
+  
+  <div class="container">
+    {{ $firstFour := slice . 0 1 }}
+    {{ range $index, $article := $firstFour }}
+    <!--Section: News of the day-->
+    <div class="row">
+    <div class="col-10">
+      <section class="border-bottom pb-4 mb-5">
+        <div class="row gx-5">
+          <div class="col-md-6 mb-4">
+            <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5"
+              data-mdb-ripple-color="light">
+              <img src="{{ $article.Image }}" alt="{{ $article.Topic }}" class="img-fluid" />
+              <a href="/article?id={{ $article.ID }}">
+  
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </a>
+            </div>
+          </div>
+  
+          <div class="col-md-6 mb-4">
+            <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3">News of the day</span>
+            <h4><strong>{{ $article.Topic }}</strong></h4>
+            <p class="text-muted">
+              {{ $article.Description }}
+            </p>
+            <a href="/article?id={{ $article.ID }}" type="button" class="btn btn-primary">Read more</a>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col-2">
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">Article Tags</h5>
+           
+              
+              <!-- Tags section -->
+              <div class="tags">
+                <a href="?tag_id=1" class="badge badge-dark">Tag 1</a>
+                <a href="?tag_id=2" class="badge badge-dark">Tag 2</a>
+                <a href="?tag_id=3" class="badge badge-dark">Tag 3</a>
+                <a href="?tag_id=4" class="badge badge-dark">Tag 4</a>
+                <a href="?tag_id=5" class="badge badge-dark">Tag 5</a>
+                <a href="?tag_id=6" class="badge badge-dark">Tag 6</a>
+                <a href="?tag_id=7" class="badge badge-dark">Tag 7</a>
+                <a href="?tag_id=8" class="badge badge-dark">Tag 8</a>
+                <a href="?tag_id=9" class="badge badge-dark">Tag 9</a>
+                <a href="?tag_id=10" class="badge badge-dark">Tag 10</a>
+            </div>
+            
+            
+              
+              <!-- Add more tags as needed -->
+              
+              <a href="#" class="mt-3 btn btn-primary">More Tags</a>
+          </div>
+      </div>
+  </div>
+    </div >
+    
+  
+    {{ end }}
+    <!--Section: News of the day-->
+
+    <!--Section: Content-->
+    <section>
+      <div class="row gx-lg-5">
+        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+          <!-- News block -->
+          <div>
+            {{ $firstFour := slice . 1 2 }}
+            {{ range $index, $article := $firstFour }}
+          
+           <!-- Featured image -->
+           <div class="bg-image hover-overlay shadow-1-strong rounded-5 ripple mb-4"
+           data-mdb-ripple-color="light">
+           <img src="{{ $article.Image }}" alt="{{ $article.Topic }}"class="img-fluid" alt="Brooklyn Bridge" />
+           <a href="/article?id={{ $article.ID }}">
+             <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+           </a>
+         </div>
+
+         <!-- Article data -->
+        
+
+         <div class="row mb-3">
+           <div class="col-6">
+             <a href="" class="text-danger">
+               <i class="fas fa-chart-pie"></i>
+           
+             </a>
+           </div>
+
+           <div class="col-6 text-end">
+             <u>{{ $article.CreatedAt }} </u>
+           </div>
+         </div>
+
+         <!-- Article title and description -->
+         <a href="" class="text-dark">
+           <h5>{{ $article.Topic }}</h5>
+
+           <p>
+             {{ $article.Description }}
+           </p>
+            </a>
+            {{ end }}
+            <hr />
+           <!-- Print the first four articles -->
+  <!-- Print the first four articles -->
+            {{ $firstFour := slice . 2 6 }}
+            {{ range $index, $article := $firstFour }}
+                <!-- News -->
+                <a href="/article?id={{ $article.ID }}" class="text-dark">
+                  <div class="row mb-4 border-bottom pb-2">
+                    <div class="col-3">
+                      <img src="{{ $article.Image }}" alt="{{ $article.Topic }}" class="img-fluid shadow-1-strong rounded" alt="Hollywood Sign on The Hill" />
+                    </div>
+
+                    <div class="col-9">
+                      <p class="mb-2"><strong>{{ $article.Topic }}</strong></p>
+                      <p>
+                        <u>{{ $article.CreatedAt }}</u>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+                <!-- {{ $article.Description }} -->
+            {{ end }}
+          
+
+            
+          </div>
+          <!-- News block -->
+        </div>
+        {{ $firstFour := slice . 7 8 }}
+        {{ range $index, $article := $firstFour }}
+        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+          <!-- News block -->
+          <div>
+            <!-- Featured image -->
+            <div class="bg-image hover-overlay shadow-1-strong rounded-5 ripple mb-4"
+              data-mdb-ripple-color="light">
+              <img src="{{ $article.Image }}" alt="{{ $article.Topic }}"class="img-fluid" alt="Brooklyn Bridge" />
+              <a href="/article?id={{ $article.ID }}">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </a>
+            </div>
+
+            <!-- Article data -->
+           
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <a href="" class="text-danger">
+                  <i class="fas fa-chart-pie"></i>
+              
+                </a>
+              </div>
+
+              <div class="col-6 text-end">
+                <u>{{ $article.CreatedAt }} </u>
+              </div>
+            </div>
+
+            <!-- Article title and description -->
+            <a href="" class="text-dark">
+              <h5>{{ $article.Topic }}</h5>
+
+              <p>
+                {{ $article.Description }}
+              </p>
+            </a>
+          {{ end }}
+            <hr />
+
+            <!-- News -->
+            {{ $articles := slice . 8 12 }}
+
+            {{ range $index, $article := $articles }}
+                <!-- News -->
+                <a href="/article?id={{ $article.ID }}" class="text-dark">
+                  <div class="row mb-4 border-bottom pb-2">
+                    <div class="col-3">
+                      <img src="{{ $article.Image }}" alt="{{ $article.Topic }}" class="img-fluid shadow-1-strong rounded" alt="Hollywood Sign on The Hill" />
+                    </div>
+            
+                    <div class ="col-9">
+                      <p class="mb-2"><strong>{{ $article.Topic }}</strong></p>
+                      <p>
+                        <u>{{ $article.CreatedAt }}</u>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+                <!-- {{ $article.Description }} -->
+            {{ end }}
+          </div>
+          <!-- News block -->
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+          <!-- News block -->
+          <div>
+            {{ $firstFour := slice . 13 14 }}
+            {{ range $index, $article := $firstFour }}
+            <!-- Featured image -->
+            <!-- Featured image -->
+            <div class="bg-image hover-overlay shadow-1-strong rounded-5 ripple mb-4"
+            data-mdb-ripple-color="light">
+            <img src="{{ $article.Image }}" alt="{{ $article.Topic }}"class="img-fluid" alt="Brooklyn Bridge" />
+            <a href="/article?id={{ $article.ID }}">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+            </a>
+          </div>
+ 
+          <!-- Article data -->
+         
+ 
+          <div class="row mb-3">
+            <div class="col-6">
+              <a href="" class="text-danger">
+                <i class="fas fa-chart-pie"></i>
+            
+              </a>
+            </div>
+ 
+            <div class="col-6 text-end">
+              <u>{{ $article.CreatedAt }} </u>
+            </div>
+          </div>
+ 
+          <!-- Article title and description -->
+          <a href="" class="text-dark">
+            <h5>{{ $article.Topic }}</h5>
+ 
+            <p>
+              {{ $article.Description }}
+            </p>
+             </a>
+            </a>
+            {{end}}
+            <hr />
+
+            {{ $articles := slice . 7 11 }}
+
+            {{ range $index, $article := $articles }}
+                <!-- News -->
+                <a href="/article?id={{ $article.ID }}" class="text-dark">
+                  <div class="row mb-4 border-bottom pb-2">
+                    <div class="col-3">
+                      <img src="{{ $article.Image }}" alt="{{ $article.Topic }}" class="img-fluid shadow-1-strong rounded" alt="Hollywood Sign on The Hill" />
+                    </div>
+            
+                    <div class ="col-9">
+                      <p class="mb-2"><strong>{{ $article.Topic }}</strong></p>
+                      <p>
+                        <u>{{ $article.CreatedAt }}</u>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+                <!-- {{ $article.Description }} -->
+            {{ end }}
+          </div>
+          <!-- News block -->
+        </div>
+      </div>
+    </section>
+    <!--Section: Content-->
+
+    <!-- Pagination -->
+    <nav class="my-4" aria-label="...">
+      <ul class="pagination pagination-circle justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <!-- End your project here-->
+
+  <!-- MDB -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Custom scripts -->
+  <script type="text/javascript"></script>
+</body>
+
+</html>

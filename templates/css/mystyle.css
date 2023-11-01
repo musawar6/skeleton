@@ -1,0 +1,9 @@
+.nav{
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom: 40px !important;
+}
+.navright{
+    float: right !important;
+}
