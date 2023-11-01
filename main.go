@@ -32,6 +32,7 @@ type ArticleUser struct {
 	Username    string
 	Tags        []string
 }
+var user_id=0
 func database() error {
 	database, err := sql.Open("sqlite3", "./database2.db")
 	if err != nil {
@@ -129,10 +130,10 @@ func registerHandleFunc (w http.ResponseWriter, r *http.Request) {
     fmt.Fprint (w, "register")
 }
 func routes(){
-	tpl, _ = template.ParseFiles("templates/news-aggregator.html","templates/login.html","templates/register.html","templates/social-newsfeed-v1.html","templates/news-aggregatortag.html")
+	tpl, _ = template.ParseFiles("templates/news-aggregator.html","templates/login.html","templates/register.html","templates/social-newsfeed-v1.html","templates/news-aggregatortag.html","templates/Article.html")
 	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("./templates/"))))
 
-
+    http.HandleFunc("/writearticle", writearticleHandler)
 	http.HandleFunc("/article", articleHandler)
     http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/login", loginHandler)
@@ -155,6 +156,87 @@ func main() {
 
 
 
+func writearticleHandler(w http.ResponseWriter, r *http.Request) {
+    // Parse the query parameters
+    queryValues := r.URL.Query()
+
+    // Create variables based on the query parameters
+    title := queryValues.Get("title")
+    description := queryValues.Get("desc")
+    tags := queryValues["tags"]
+    image := queryValues.Get("image")
+
+    // Print the extracted values (for debugging)
+    fmt.Printf("Title: %s\n", title)
+    fmt.Printf("Description: %s\n", description)
+    fmt.Printf("Tags: %v\n", tags)
+    fmt.Printf("Image: %s\n", image)
+
+
+	session, _ := store.Get(r, "User") // Replace "session-name" with your session name
+
+    if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+		print("Unauthorized")
+		print(session.Values["authenticated"])
+
+		
+        tpl.ExecuteTemplate(w, "login.html" ,nil)
+        return
+    }else{
+        if title != "" && description != ""  &&  image != ""{
+                        db, err := sql.Open("sqlite3", "./database2.db")
+                        if err != nil {
+                            http.Error(w, "Database connection error", http.StatusInternalServerError)
+                            return
+                        }
+                        defer db.Close()
+                    
+                        // Your code to save the article data to the database goes here
+                        
+                
+                        query := "SELECT id FROM Users WHERE email = ?"
+
+                        // Execute the query with the provided email
+                        err = db.QueryRow(query, session.Values["email"].(string)).Scan(&user_id)
+                        // Insert the article information into the Articles table
+                        _, err = db.Exec("INSERT INTO Articles (user_id, topic, description, image, create_at) VALUES (?, ?, ?, ?, datetime('now'))", user_id, title, description, image)
+                        if err != nil {
+                            http.Error(w, "Error saving the article", http.StatusInternalServerError)
+                            return
+                        }
+
+                        // Retrieve the last inserted row ID
+                        var articleID int64
+                        err = db.QueryRow("SELECT last_insert_rowid()").Scan(&articleID)
+                        if err != nil {
+                            http.Error(w, "Error retrieving article ID", http.StatusInternalServerError)
+                            return
+                        }
+
+                        // Insert the tag relationships into the TagArticle table
+                        for _, tagID := range tags {
+                            _, err = db.Exec("INSERT INTO TagArticle (tag_id, article_id) VALUES (?, ?)", tagID, articleID)
+                            if err != nil {
+                                http.Error(w, "Error saving tag relationships", http.StatusInternalServerError)
+                                return
+                            }
+                        }
+       
+                        // tpl.ExecuteTemplate(w,"" ,nil)
+                        http.Redirect(w, r, "/success", http.StatusSeeOther)
+                        
+       
+    }
+    
+    tpl.ExecuteTemplate(w, "Article.html" ,nil)
+
+}
+
+
+
+    
+  
+}
 
 
 
@@ -227,6 +309,49 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	
 }
 func registerHandler(w http.ResponseWriter, r *http.Request) {
+    queryValues := r.URL.Query()
+
+    // Get the values of 'email' and 'password'
+    email := queryValues.Get("email")
+    password := queryValues.Get("password")
+    repass := queryValues.Get("Repeatpassword")
+
+    // Now, you have the values of 'email' and 'password' from the URL.
+    // You can perform any necessary processing with this data.
+
+    // Example: Print the received data
+    fmt.Printf("Email: %s\n", email)
+    fmt.Printf("Password: %s\n", password)
+    fmt.Printf("Password: %s\n", repass)
+
+	if email != "" && password != "" {
+        // Open a database connection
+        db, err := sql.Open("sqlite3", "./database2.db")
+        if err != nil {
+            http.Error(w, "Database connection error", http.StatusInternalServerError)
+            return
+        }
+        defer db.Close()
+    
+        // Ensure that the password and repeated password match
+        if password != repass {
+            http.Error(w, "Passwords do not match", http.StatusBadRequest)
+            return
+        }
+    
+        // Insert the user's email and password into the Users table without creating new variables
+        _, err = db.Exec("INSERT INTO Users (email, password) VALUES (?, ?)", email, password)
+        if err != nil {
+            http.Error(w, "Error creating the user", http.StatusInternalServerError)
+            return
+        }
+    
+        // User created successfully
+        http.Redirect(w, r, "/login", http.StatusSeeOther)
+        return
+    }
+    
+
 
 	
     // func (t *Template) Execute Template (wr io.Writer, name string, data interface{}) error
@@ -350,16 +475,17 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
     var query string
     var args []interface{}
     if tagID != "" {
-        // If tag ID is provided, filter articles by tag ID
+        // If tag ID is provided, filter articles by tag ID and get the latest data
         query = `
             SELECT a.id, a.topic, a.description, a.create_at, a.image
             FROM Articles a
             INNER JOIN TagArticle ta ON a.id = ta.article_id
-            WHERE ta.tag_id = ?`
+            WHERE ta.tag_id = ?
+            ORDER BY a.create_at DESC`
         args = []interface{}{tagID}
     } else {
         // If no tag ID is provided, fetch all articles
-        query = "SELECT id, topic, description, create_at, image FROM Articles"
+        query = "SELECT id, topic, description, create_at, image FROM Articles ORDER BY create_at DESC"
     }
 
     rows, err := db.Query(query, args...)
@@ -383,9 +509,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 		err = tpl.ExecuteTemplate(w, "news-aggregatortag.html", articles)
 
-	}
+	}else{
+        err = tpl.ExecuteTemplate(w, "news-aggregator.html", articles)
+
+    }
     // Execute the HTML template with articles as data
-    err = tpl.ExecuteTemplate(w, "news-aggregator.html", articles)
+    
 }
 
 
