@@ -139,8 +139,8 @@ func routes(){
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/logout", logoutHandler)
-    fmt.Println("Server is running on :9080...")
-    http.ListenAndServe(":9080", nil)
+    fmt.Println("Server is running on :3000...")
+    http.ListenAndServe(":3000", nil)
 }
 
 
